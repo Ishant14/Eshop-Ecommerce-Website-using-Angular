@@ -1,5 +1,9 @@
 # Eshop
 
+Eshop is an ecommerce website developed using Angular 5 and Angular Firebase in the backened.   
+
+
+
 Some Important concepts to learn from this project :
 
 
@@ -9,38 +13,40 @@ Switch Map operator is mainly used when you want have a scenario where you want 
 
 ```typescript
 
-constructor(
-    private productService: ProductService,
-    private route: ActivatedRoute,
-    private categoryService: CategoryService) {
-    this.productService.getAllProducts().subscribe(
-      products => {
-        this.filteredProducts = this.products = products
+ this.productService
+      .getAllProducts()
+      .switchMap(products => {
+        this.products = products;
+        return route.queryParamMap;
+      })
+      .subscribe(params => {
+        this.category = params.get('category');
+        this.filteredProducts =
+          (this.category) ? this.products.filter(p => p.category === this.category) :
+            this.products;
       });
-    this.categories$ = this.categoryService.getCategories();
-
-    route.queryParamMap.subscribe(params => {
-      this.category = params.get('category');
-      this.filteredProducts =
-        (this.category) ? this.products.filter(p => p.category  === this.category) :
-          this.products;
-    });
-  }
   ```
+  
+  In the above code the route.queryParamMap observables is dependent on the product , this obserbavles needs to be susbcribed only when we get all the products . Hence we have used the switchMap() operator here.
 
 
+## take opetaor 
+
+Sometime you dont want the subscription to remain untill the component is destroyed. Sometine you just want the first emitted value and then completed observables. In that case we use the **take** operator. **Take** operator take the first value from the observable and complete the observables . Refer the below code :
+
+```typescript
+if (this.id) {
+      this.productService.getPoduct(this.id).take(1).subscribe(p => this.product = p);
+    }
+```
+
+## When to use the routeparam observables? 
+
+Whenever we need different route query paramter but we need to stay on the same component. In that we need to subscribe the route param observables. Lets take the example the of our applicaiton , we need to filter the proudcts on the basis of category (we are sending the category as query param ) but we need to stay on the same Product Component. Since it does not make any sense to reinitialise and destory the component everytime. So to make this happend we subscribed to the 
+Activated Route param observables and got the category and filtered our products and remained on the same component.
 
 
-
-
-
-
-
-
-
-
-
-
+# Project related Information 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.2.
 
