@@ -1,5 +1,47 @@
 # Eshop
 
+Some Important concepts to learn from this project :
+
+
+# SwitchMap Operator 
+
+Switch Map operator is mainly used when you want have a scenario where you want your first observables to get complete and then execute the second Observables. Refer the code of the product compoenent as below:
+
+```typescript
+
+constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute,
+    private categoryService: CategoryService) {
+    this.productService.getAllProducts().subscribe(
+      products => {
+        this.filteredProducts = this.products = products
+      });
+    this.categories$ = this.categoryService.getCategories();
+
+    route.queryParamMap.subscribe(params => {
+      this.category = params.get('category');
+      this.filteredProducts =
+        (this.category) ? this.products.filter(p => p.category  === this.category) :
+          this.products;
+    });
+  }
+  ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.2.
 
 ## Development server
