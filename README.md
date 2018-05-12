@@ -3,7 +3,7 @@
 Some Important concepts to learn from this project :
 
 
-# SwitchMap Operator 
+## SwitchMap Operator 
 
 Switch Map operator is mainly used when you want have a scenario where you want your first observables to get complete and then execute the second Observables. Refer the code of the product compoenent as below:
 
