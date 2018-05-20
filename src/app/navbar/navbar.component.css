@@ -1,3 +1,8 @@
 .dropdown-toggle{
     cursor: pointer;
 }
+
+.nav {
+    background-color: #2874f0;
+    color: #FFFFFF;
+}

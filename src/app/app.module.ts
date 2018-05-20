@@ -22,11 +22,16 @@ import { AuthGuard } from './auth-guard.service';
 import { UserService } from './user.service';
 import { AdminAuthGurad } from './admin-auth-gurad.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
-import {CategoryService} from './category.service';
+import { CategoryService } from './category.service';
 import { FormsModule } from '@angular/forms';
-import {ProductService} from './product.service';
+import { ProductService } from './product.service';
+import { OrderService } from './order.service';
 import { DataTableModule } from 'angular5-data-table';
-
+import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
+import { ShoppingCartService } from './shopping-cart.service';
+import { ProductQuantityComponent } from './product-quantity/product-quantity.component';
+import { ShoppingCartSummaryComponent } from './shopping-cart-summary/shopping-cart-summary.component';
 
 
 @NgModule({
@@ -42,7 +47,11 @@ import { DataTableModule } from 'angular5-data-table';
     AdminProductsComponent,
     AdminOrdersComponent,
     LoginComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ProductFilterComponent,
+    ProductCardComponent,
+    ProductQuantityComponent,
+    ShoppingCartSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -57,39 +66,41 @@ import { DataTableModule } from 'angular5-data-table';
       { path: 'products', component: ProductsComponent },
       { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
-      { path: 'order-success', component: OrderSuccessComponent, canActivate: [AuthGuard] },
+      { path: 'order-success/:id', component: OrderSuccessComponent, canActivate: [AuthGuard] },
       { path: 'my/orders', component: MyOrdersComponent, canActivate: [AuthGuard] },
       { path: 'login', component: LoginComponent },
-      { 
-        path: 'admin/orders', 
-        component: AdminOrdersComponent, 
-        canActivate: [AuthGuard,AdminAuthGurad] 
+      {
+        path: 'admin/orders',
+        component: AdminOrdersComponent,
+        canActivate: [AuthGuard, AdminAuthGurad]
       },
-      { 
-        path: 'admin/products/new', 
-        component: ProductFormComponent, 
-        canActivate: [AuthGuard,AdminAuthGurad] 
+      {
+        path: 'admin/products/new',
+        component: ProductFormComponent,
+        canActivate: [AuthGuard, AdminAuthGurad]
       },
-      { 
-        path: 'admin/products/:id', 
-        component: ProductFormComponent, 
-        canActivate: [AuthGuard,AdminAuthGurad] 
+      {
+        path: 'admin/products/:id',
+        component: ProductFormComponent,
+        canActivate: [AuthGuard, AdminAuthGurad]
       },
-      { 
-        path: 'admin/products', 
-        component: AdminProductsComponent, 
-        canActivate: [AuthGuard,AdminAuthGurad] 
+      {
+        path: 'admin/products',
+        component: AdminProductsComponent,
+        canActivate: [AuthGuard, AdminAuthGurad]
       },
 
     ])
   ],
   providers: [
-    AuthService, 
-    AuthGuard, 
-    UserService, 
+    AuthService,
+    AuthGuard,
+    UserService,
     AdminAuthGurad,
     CategoryService,
-    ProductService
+    ProductService,
+    ShoppingCartService,
+    OrderService
   ],
   bootstrap: [AppComponent]
 })
